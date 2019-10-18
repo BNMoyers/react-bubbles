@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { Redirect } from "react-router-dom";
 
-const Login = props => {
+const Login = (props) => {
   const [credentials, setCredentials] = useState({});
 
   const handleChange = e => {
