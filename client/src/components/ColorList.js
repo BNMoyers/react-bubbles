@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { axiosWithAuth }from "../utils/axiosWithAuth";
 
 const initialColor = {
   color: "",
@@ -18,13 +18,24 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
-    // Make a put request to save your updated color
-    // think about where will you get the id from...
-    // where is is saved right now?
+    axiosWithAuth()
+    .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
+    .then(res => { 
+      colors.updateColors([...colors, res.data])
+    })
+    .catch(err => console.log(err.response))
+    setEditing(false)
+    
   };
 
   const deleteColor = color => {
-    // make a delete request to delete this color
+    axiosWithAuth()
+    .delete(`http://localhost:5000/api/colors/${color.id}`, color)
+    .then(res => { 
+      colors.updateColors([...colors, res.data])
+    })
+    .catch(err => console.log(err.response))
+    
   };
 
   return (
